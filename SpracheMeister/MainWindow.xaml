@@ -1,0 +1,42 @@
+﻿<Window x:Class="SpracheMeister.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:SpracheMeister.ViewModel"
+        xmlns:view="clr-namespace:SpracheMeister.View"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="500" 
+        Width="800"
+        MinHeight="500" 
+        MinWidth="800">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:TranslatorViewModel}">
+            <view:TranslatorView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SettingsViewModel}">
+            <view:SettingsView/>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Main menu -->
+        <Menu FontSize="16">
+            <MenuItem Header="_View">
+                <MenuItem Header="_Translator" 
+                          Command="{Binding SelectViewModelCommand}"
+                          CommandParameter="{Binding TranslatorViewModel}"/>
+                <MenuItem Header="_Settings" 
+                          Command="{Binding SelectViewModelCommand}"
+                          CommandParameter="{Binding SettingsViewModel}"/>
+            </MenuItem>
+        </Menu>
+
+        <ContentControl Grid.Row="1" Content="{Binding SelectedViewModel}"/>
+    </Grid>
+</Window>
